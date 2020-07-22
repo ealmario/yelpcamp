@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<%- include('partials/content-header') %>
+
+<main>
+  <div class="container py-5">
+    <h1 class="my-5">Create a New Campground</h1>
+
+    <form action="/campgrounds" method="POST">
+      <div class="form-group my-3">
+        <label for="name">Campground Name:</label>
+        <input type="text" id="name" name="name" class="form-control">
+      </div>
+      <div class="form-group my-3">
+        <label for="img">Campground Image:</label>
+        <input type="text" id="img" name="img" class="form-control">
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
