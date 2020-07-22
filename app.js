@@ -45,6 +45,12 @@ app.get('/campgrounds', (req, res, next) => {
   res.render('campgrounds', {campgrounds: campgrounds});
 })
 
+app.post('/campgrounds', (req, res, next) => {
+  res.send("POST ROUTE");
+  // get date from form and add to campgrounds array
+  // redirect back to campgrounds page
+})
+
 app.get('*', (req, res, next) => {
   res.send({
     error: 404,
