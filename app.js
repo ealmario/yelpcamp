@@ -24,14 +24,16 @@ app.listen(port, () => {
 // =============
 const campgroundSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Campground.create({
 //   name: "Camp Talusi",
-//   image: "http://via.placeholder.com/300"
+//   image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+//   description: "A beautiful island located in El Nido, Palawan"
 // }, (err, campground) => {
 //   console.log(err ? err : `Newly created campground: ${campground}`);
 // })
@@ -67,23 +69,26 @@ app.get('/', (req, res, next) => {
   res.render('landing');
 })
 
+// INDEX
 app.get('/campgrounds', (req, res, next) => {
   Campground.find({}, (err, campgrounds) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('campgrounds', {campgrounds: campgrounds});
+      res.render('index', {campgrounds: campgrounds});
     }
   });
 })
 
+// CREATE
 app.post('/campgrounds', (req, res, next) => {
   // get data from form and add to campgrounds array
   // redirect back to campgrounds page
   const newCampground = 
   {
     name: req.body.name,
-    image: req.body.img
+    image: req.body.img,
+    description: req.body.description
   }
 
   // create a new campground and save to DB
@@ -96,10 +101,24 @@ app.post('/campgrounds', (req, res, next) => {
   })
 })
 
+// NEW
 app.get('/campgrounds/new', (req, res, next) => {
   //  form
   res.render('new');
 })
+
+// SHOW
+app.get('/campgrounds/:id', (req, res, next) => {
+  // find the campground with provided ID
+  Campground.findById(req.params.id, (err, foundCampground) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // render show template with that campground
+      res.render('show', {campground: foundCampground});
+    }
+  });
+});
 
 app.get('*', (req, res, next) => {
   res.send({
